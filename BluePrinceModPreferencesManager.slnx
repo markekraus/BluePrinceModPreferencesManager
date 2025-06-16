@@ -1,0 +1,6 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="BluePrince" />
+  </Configurations>
+  <Project Path="src/BluePrinceModPreferencesManager.csproj" />
+</Solution>

@@ -1,0 +1,79 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net6</TargetFramework>
+        <OutputType>Library</OutputType>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <MSBuildWarningsAsMessages>$(MSBuildWarningsAsMessages);MSB3277</MSBuildWarningsAsMessages>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <configurations>BluePrince</configurations>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)'=='BluePrince'">
+        <TargetFramework>net6</TargetFramework>
+        <OutputPath>..\Release\BluePrinceModPreferencesManager\</OutputPath>
+        <PublishDir>..\Publish\BluePrinceModPreferencesManager\</PublishDir>
+        <AssemblyName>BluePrinceModPreferencesManager</AssemblyName>
+        <DebugSymbols>False</DebugSymbols>
+        <DebugType>None</DebugType>
+        <DefineConstants>BLUE_PRINCE</DefineConstants>
+    </PropertyGroup>
+    <ItemGroup Condition="'$(Configuration)'=='BluePrince'">
+        <Reference Include="Assembly-CSharp">
+            <HintPath>..\..\..\MelonLoader\Il2CppAssemblies\Assembly-CSharp.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="Il2CppInterop.Runtime">
+            <HintPath>..\..\..\MelonLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="Il2Cppmscorlib">
+            <HintPath>..\..\..\MelonLoader\Il2CppAssemblies\Il2Cppmscorlib.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="Il2CppSystem.Core">
+            <HintPath>..\..\..\MelonLoader\Il2CppAssemblies\Il2CppSystem.Core.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="Il2CppPlayMaker">
+            <HintPath>..\..\..\MelonLoader\Il2CppAssemblies\Il2CppPlayMaker.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="UnityEngine.UI">
+            <HintPath>..\..\..\MelonLoader\Il2CppAssemblies\UnityEngine.UI.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="UnityEngine.UIModule">
+            <HintPath>..\..\..\MelonLoader\Il2CppAssemblies\UnityEngine.UIModule.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="UnityEngine.TextRenderingModule">
+            <HintPath>..\..\..\MelonLoader\Il2CppAssemblies\UnityEngine.TextRenderingModule.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="UnityEngine.ParticleSystemModule">
+            <HintPath>..\..\..\MelonLoader\Il2CppAssemblies\UnityEngine.ParticleSystemModule.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="MelonLoader">
+            <HintPath>..\..\..\MelonLoader\net6\MelonLoader.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="Tomlet">
+            <HintPath>..\..\..\MelonLoader\net6\Tomlet.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="UnityEngine.CoreModule">
+            <HintPath>..\..\..\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="Unity.TextMeshPro">
+            <HintPath>..\..\..\MelonLoader\Il2CppAssemblies\Unity.TextMeshPro.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup Condition="'$(Configuration)'=='BluePrince'">
+        <Reference Include="UniverseLib">
+            <HintPath>..\..\..\UserLibs\UniverseLib.ML.IL2CPP.Interop.dll</HintPath>
+            <Private>True</Private>
+        </Reference>
+    </ItemGroup>
+</Project>
