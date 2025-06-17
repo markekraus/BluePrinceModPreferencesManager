@@ -15,62 +15,65 @@ public class InteractiveColorProperty
     public readonly ColorProperty Property;
     public string FieldName => Property.ToString();
     public readonly InteractiveColor Owner;
-    private Slider Slider;
-    private InputFieldRef inputFieldObject;
-    private InputField InputField;
-    private GameObject row;
-    private Text label;
-    private GameObject sliderObject;
+    private readonly Slider Slider;
+    private readonly InputFieldRef inputFieldObject;
+    private InputField InputField => inputFieldObject.Component;
+    private readonly GameObject row;
+    private readonly Text label;
+    private readonly GameObject sliderObject;
     public InteractiveColorProperty(ColorProperty Property, InteractiveColor Owner)
     {
         this.Property = Property;
         this.Owner = Owner;
-        CreateRow();
-        CreateRowLabel();
-        CreateInputField();
-        CreateSlider();
+        row = CreateRow();
+        label = CreateRowLabel();
+        inputFieldObject = CreateInputField();
+        (sliderObject, Slider) = CreateSlider();
     }
     #region UI Construction
-    private void CreateRow()
-    {
-        row = UIFactory.CreateHorizontalGroup(
+    private GameObject CreateRow() =>
+        UIFactory.CreateHorizontalGroup(
             Owner.grid,
             $"EditorRow_{FieldName}",
             false, true, true, true, 5, default,
             new Color(1, 1, 1, 0));
-    }
-    private void CreateRowLabel()
+    private Text CreateRowLabel()
     {
-        label = UIFactory.CreateLabel(
+        var label = UIFactory.CreateLabel(
             row,
             "RowLabel",
             $"{FieldName}:",
             TextAnchor.MiddleRight,
             Color.cyan);
         UIFactory.SetLayoutElement(label.gameObject, minWidth: 17, flexibleWidth: 0, minHeight: 25);
+        return label;
     }
-    private void CreateInputField()
+    private InputFieldRef CreateInputField()
     {
-        inputFieldObject = UIFactory.CreateInputField(row, "InputField", "...");
+        var inputFieldObject = UIFactory.CreateInputField(row, "InputField", "...");
         UIFactory.SetLayoutElement(inputFieldObject.Component.gameObject, minWidth: 40, minHeight: 25, flexibleWidth: 0);
-        InputField = inputFieldObject.Component;
-        InputField.characterValidation =
+        var inputField = inputFieldObject.Component;
+        inputField.characterValidation =
             Owner.Value is Color
                 ? InputField.CharacterValidation.Decimal
                 : InputField.CharacterValidation.Integer;
-        InputField.onValueChanged.AddListener(InputFieldValueChanged);
+        inputField.onValueChanged.AddListener(InputFieldValueChanged);
+        return inputFieldObject;
     }
-    private void CreateSlider()
+    private (GameObject, Slider) CreateSlider()
     {
-        sliderObject = UIFactory.CreateSlider(row, "Slider", out Slider Slider);
+        var sliderObject = UIFactory.CreateSlider(row, "Slider", out Slider slider);
         UIFactory.SetLayoutElement(sliderObject, minHeight: 25, minWidth: 70, flexibleWidth: 999, flexibleHeight: 0);
-        Slider.minValue = 0;
-        (Slider.maxValue, Slider.value) =
-            Owner.Value switch {
+        slider.minValue = 0;
+        (slider.maxValue, slider.value) =
+            Owner.Value switch
+            {
                 Color color => (1, GetValueFromColor(ref color)),
                 Color32 color => (255, GetValueFromColor(ref color)),
-                _ => throw new NotImplementedException()};
-        Slider.onValueChanged.AddListener(SliderValueChanged);
+                _ => throw new NotImplementedException()
+            };
+        slider.onValueChanged.AddListener(SliderValueChanged);
+        return (sliderObject, slider);
     }
     private void SliderValueChanged(float value)
     {
