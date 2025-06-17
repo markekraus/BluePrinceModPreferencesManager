@@ -75,16 +75,6 @@ public class InteractiveColorProperty
         slider.onValueChanged.AddListener(SliderValueChanged);
         return (sliderObject, slider);
     }
-    private void SliderValueChanged(float value)
-    {
-        try {
-            switch (Owner.Value) {
-                case Color color: SetValueToColor(value, ref color); break;
-                case Color32 color: SetValueToColor((byte)value, ref color); break;}}
-        catch (Exception ex) {
-            LogError($"Failed to set color value '{value}' on Color.{Property} for property '{Owner.Owner.Preference.Category.Identifier}.{Owner.Owner.Preference.Identifier}'");
-            LogException(ex);}
-    }
     #endregion
     #region Factory
     public static List<InteractiveColorProperty> CreateAll(InteractiveColor Owner) =>
@@ -95,6 +85,16 @@ public class InteractiveColorProperty
             new(ColorProperty.A, Owner)};
     #endregion
     #region Callbacks
+    private void SliderValueChanged(float value)
+    {
+        try {
+            switch (Owner.Value) {
+                case Color color: SetValueToColor(value, ref color); break;
+                case Color32 color: SetValueToColor((byte)value, ref color); break;}}
+        catch (Exception ex) {
+            LogError($"Failed to set color value '{value}' on Color.{Property} for property '{Owner.Owner.Preference.Category.Identifier}.{Owner.Owner.Preference.Identifier}'");
+            LogException(ex);}
+    }
     private void InputFieldValueChanged(string value)
     {
         switch (Owner.Value) {
