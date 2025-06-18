@@ -6,7 +6,7 @@ using UniverseLib;
 using UniverseLib.UI;
 using UniverseLib.UI.Models;
 
-namespace BluePrinceModPreferencesManager.UI;
+namespace BluePrinceModPreferencesManager.U.InteractiveValue;
 
 public enum ColorProperty { R, G, B, A }
 

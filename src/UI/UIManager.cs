@@ -1,7 +1,6 @@
 using UnityEngine;
 using UniverseLib.UI;
 using UniverseLib.UI.Panels;
-using UnityEngine;
 using System;
 using MelonLoader;
 using System.Collections;
@@ -11,7 +10,7 @@ using UniverseLib;
 using UniverseLib.UI.Models;
 using UnityEngine.UI;
 
-namespace BluePrinceModPreferencesManager;
+namespace BluePrinceModPreferencesManager.UI;
 
 public class UIManager : PanelBase
 {

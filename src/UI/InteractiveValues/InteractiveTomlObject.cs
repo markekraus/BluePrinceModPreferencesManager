@@ -7,7 +7,7 @@ using UniverseLib;
 using UniverseLib.UI;
 using UniverseLib.UI.Models;
 
-namespace BluePrinceModPreferencesManager.UI;
+namespace BluePrinceModPreferencesManager.U.InteractiveValue;
 
 public class InteractiveTomlObject : InteractiveValue
 {
