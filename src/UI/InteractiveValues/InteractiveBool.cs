@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UniverseLib;
 using UniverseLib.UI;
 
-namespace BluePrinceModPreferencesManager.U.InteractiveValue;
+namespace BluePrinceModPreferencesManager.UI.InteractiveValue;
 
 public class InteractiveBool : InteractiveValue
 {

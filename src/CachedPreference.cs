@@ -1,5 +1,5 @@
 using System;
-using BluePrinceModPreferencesManager.U.InteractiveValue;
+using BluePrinceModPreferencesManager.UI.InteractiveValue;
 using BluePrinceModPreferencesManager.UI;
 using MelonLoader;
 using UnityEngine;
