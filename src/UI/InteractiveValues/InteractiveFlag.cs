@@ -10,7 +10,11 @@ namespace BluePrinceModPreferencesManager.UI.InteractiveValue;
 
 internal record ToggleMap(EnumMap EnumMap, Toggle Toggle)
 {
-    public bool IsOn => Toggle.isOn;
+    public bool IsOn
+    {
+        get => Toggle.isOn;
+        set => Toggle.SetIsOnWithoutNotify(value);
+    }
     public string Name => EnumMap.Name;
     public long Id => EnumMap.Id;
     public bool isNoneFlag => Id == InteractiveFlag.noneFlag;
@@ -88,7 +92,7 @@ internal class InteractiveFlag : InteractiveEnum
         long enumValue = Convert.ToInt64(Value);
         lock (_refreshUiLock)
             foreach (var toggleMap in toggleMaps)
-                toggleMap.Toggle.SetIsOnWithoutNotify(IsOn(enumValue, toggleMap.Id));
+                toggleMap.IsOn = IsOn(enumValue, toggleMap.Id);
     }
     private bool IsOn(long enumValue, long flag) =>
         (enumValue == noneFlag && flag == noneFlag) ||
