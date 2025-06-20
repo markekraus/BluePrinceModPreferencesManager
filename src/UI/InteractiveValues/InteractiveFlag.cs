@@ -97,7 +97,7 @@ internal class InteractiveFlag : InteractiveEnum
     private bool IsOn(long enumValue, long flag) =>
         (enumValue == noneFlag && flag == noneFlag) ||
         (enumValue == allFlag && flag == allFlag) ||
-        (enumValue & flag) != 0;
+        ((flag != allFlag) && (enumValue & flag) != 0);
     internal override void OnValueUpdated() =>
         base.OnValueUpdated();
     protected internal override void OnToggleSubContent(bool toggle)
