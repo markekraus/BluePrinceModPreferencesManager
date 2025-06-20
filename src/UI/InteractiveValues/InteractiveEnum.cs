@@ -16,6 +16,11 @@ internal class InteractiveEnum : InteractiveValue
     private Dictionary<string, Dropdown.OptionData> dropdownOptions = new();
     private GameObject dropdownObject;
     private Dropdown dropdown;
+    private int DropdownValue
+    {
+        get => dropdown.value;
+        set => dropdown.SetValueWithoutNotify(value);
+    }
     protected List<EnumMap> enumValues =>
         enumCache.TryGetValue(enumType, out List<EnumMap> value)
             ? value
@@ -67,7 +72,7 @@ internal class InteractiveEnum : InteractiveValue
 
         var option = Value.ToString();
         if (dropdownOptions.ContainsKey(option))
-            dropdown.value = dropdown.options.IndexOf(dropdownOptions[option]);
+            DropdownValue = dropdown.options.IndexOf(dropdownOptions[option]);
     }
     public override void ConstructUI(GameObject parent)
     {
@@ -98,8 +103,7 @@ internal class InteractiveEnum : InteractiveValue
     }
     private void SetValueFromDropdown(int _)
     {
-        var index = dropdown.value;
-        if (!Enum.TryParse(enumType, enumValues[index].Name, out object value)) return;
+        if (!Enum.TryParse(enumType, enumValues[DropdownValue].Name, out object value)) return;
         Value = value;
         Owner.SetPreferenceValueFromInteractiveValue();
         RefreshUIForValue();

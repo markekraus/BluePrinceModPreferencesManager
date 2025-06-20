@@ -16,6 +16,11 @@ public class InteractiveColor : InteractiveValue
     internal GameObject imageObject;
     internal GameObject editorGroup;
     internal GameObject grid;
+    internal Color ColorImageValue
+    {
+        get => colorImage.color;
+        set => colorImage.color = value;
+    }
     public InteractiveColor(object value, Type valueType) : base(value, valueType) { }
     public override bool SupportsType(Type type) =>
          type == typeof(Color) || type == typeof(Color32);
@@ -53,7 +58,7 @@ public class InteractiveColor : InteractiveValue
     {
         imageObject = UIFactory.CreateUIObject("ColorImageHelper", imageHolder, new Vector2(100, 25));
         colorImage = imageObject.AddComponent<Image>();
-        colorImage.color = Value is Color value ? value : (Color)(Color32)Value;
+        SetColorImageFromValue();
     }
     private void CreateEditorGroup()
     {
@@ -91,8 +96,14 @@ public class InteractiveColor : InteractiveValue
     }
     private void RefreshColorUI()
     {
+        SetColorImageFromValue();
         foreach (var property in colorProperties)
             property.RefreshColorUI();
     }
     #endregion
+    private void SetColorImageFromValue() =>
+        ColorImageValue = Value switch {
+            Color32 color => color,
+            Color color => color,
+            _ => throw new NotImplementedException()};
 }

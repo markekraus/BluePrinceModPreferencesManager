@@ -48,7 +48,7 @@ public class InteractiveBool : InteractiveValue
         if (Value is not bool value) return;
 
         toggle.gameObject.SetActive(true);
-        toggle.isOn = value;
+        toggle.SetIsOnWithoutNotify(value);
         var color = value
             ? "6bc981"  // on
             : "c96b6b"; // off

@@ -88,7 +88,7 @@ internal class InteractiveFlag : InteractiveEnum
         long enumValue = Convert.ToInt64(Value);
         lock (_refreshUiLock)
             foreach (var toggleMap in toggleMaps)
-                toggleMap.Toggle.isOn = IsOn(enumValue, toggleMap.Id);
+                toggleMap.Toggle.SetIsOnWithoutNotify(IsOn(enumValue, toggleMap.Id));
     }
     private bool IsOn(long enumValue, long flag) =>
         (enumValue == noneFlag && flag == noneFlag) ||
