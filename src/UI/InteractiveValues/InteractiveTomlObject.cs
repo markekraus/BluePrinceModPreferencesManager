@@ -84,10 +84,20 @@ public class InteractiveTomlObject : InteractiveValue
         if (!hiddenObject.gameObject.activeSelf)
             hiddenObject.gameObject.SetActive(true);
     }
+    #region UI Construction
     public override void ConstructUI(GameObject parent)
     {
         base.ConstructUI(parent);
-
+        CreateHiddenObject();
+        ConfigureHiddenText();
+        ConfigureHiddenFitter();
+        CreateValueInput();
+        ConfigurePlaceholderText();
+        OnValueUpdated();
+        valueInput.OnValueChanged += OnValueUpdated;
+    }
+    private void CreateHiddenObject()
+    {
         hiddenObject = UIFactory.CreateLabel(
             mainContent,
             "HiddenLabel", "",
@@ -95,34 +105,37 @@ public class InteractiveTomlObject : InteractiveValue
         hiddenObject.SetActive(false);
         UIFactory.SetLayoutElement(hiddenObject, minHeight: 25, flexibleHeight: 500, minWidth: 250, flexibleWidth: 9000);
         UIFactory.SetLayoutGroup<HorizontalLayoutGroup>(hiddenObject, true, true, true, true);
-
+    }
+    private void ConfigureHiddenText()
+    {
         hiddenText = hiddenObject.GetComponent<Text>();
         hiddenText.color = Color.clear;
         hiddenText.fontSize = 14;
         hiddenText.raycastTarget = false;
         hiddenText.supportRichText = false;
-
+    }
+    private void ConfigureHiddenFitter()
+    {
         var hiddenFitter = hiddenObject.AddComponent<ContentSizeFitter>();
         hiddenFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-
-
+    }
+    private void CreateValueInput()
+    {
         valueInput = UIFactory.CreateInputField(hiddenObject, "StringInputField", "...");
         UIFactory.SetLayoutElement(valueInput.Component.gameObject, minWidth: 120, minHeight: 25, flexibleWidth: 5000, flexibleHeight: 5000);
         valueInput.Component.lineType = InputField.LineType.MultiLineNewline;
-
+        valueInput.Component.textComponent.supportRichText = false;
+    }
+    private void ConfigurePlaceholderText()
+    {
         placeholderText = valueInput.Component.placeholder.GetComponent<Text>();
         placeholderText.supportRichText = false;
-        valueInput.Component.textComponent.supportRichText = false;
-
-        OnValueUpdated();
-
-        valueInput.OnValueChanged += OnValueUpdated;
     }
-
+    #endregion
     private void OnValueUpdated(string value)
     {
-         hiddenText.text = value ?? "";
-            LayoutRebuilder.ForceRebuildLayoutImmediate(Owner.ContentRect);
-            SetValueFromInput();
+        hiddenText.text = value ?? "";
+        LayoutRebuilder.ForceRebuildLayoutImmediate(Owner.ContentRect);
+        SetValueFromInput();
     }
 }
