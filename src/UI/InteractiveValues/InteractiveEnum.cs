@@ -12,11 +12,11 @@ internal record EnumMap(long Id, string Name);
 internal class InteractiveEnum : InteractiveValue
 {
     private static Dictionary<Type, List<EnumMap>> enumCache = new();
-    private Type enumType;
+    protected Type enumType;
     private Dictionary<string, Dropdown.OptionData> dropdownOptions = new();
     private GameObject dropdownObject;
     private Dropdown dropdown;
-    private List<EnumMap> enumValues =>
+    protected List<EnumMap> enumValues =>
         enumCache.TryGetValue(enumType, out List<EnumMap> value)
             ? value
             : null;
